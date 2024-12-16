@@ -2,26 +2,6 @@
 #include "sandpiles.h"
 
 /**
- * sandpiles_sum - Computes the sum of two sandpiles and stabilizes the result
- * @grid1: First sandpile
- * @grid2: Second sandpile
- */
-void sandpiles_sum(int grid1[3][3], int grid2[3][3])
-{
-    int i, j;
-
-    for (i = 0; i < 3; i++)
-        for (j = 0; j < 3; j++)
-            grid1[i][j] += grid2[i][j];
-
-    while (!is_stable(grid1))
-    {
-        print_grid(grid1);
-        topple(grid1);
-    }
-}
-
-/**
  * print_grid - Prints a 3x3 grid
  * @grid: The grid to print
  */
@@ -89,4 +69,24 @@ static void topple(int grid[3][3])
     for (i = 0; i < 3; i++)
         for (j = 0; j < 3; j++)
             grid[i][j] += temp[i][j];
+}
+
+/**
+ * sandpiles_sum - Computes the sum of two sandpiles and stabilizes the result
+ * @grid1: First sandpile
+ * @grid2: Second sandpile
+ */
+void sandpiles_sum(int grid1[3][3], int grid2[3][3])
+{
+    int i, j;
+
+    for (i = 0; i < 3; i++)
+        for (j = 0; j < 3; j++)
+            grid1[i][j] += grid2[i][j];
+
+    while (!is_stable(grid1))
+    {
+        print_grid(grid1);
+        topple(grid1);
+    }
 }
