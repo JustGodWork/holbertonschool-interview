@@ -7,22 +7,23 @@
  */
 void heapify_down(heap_t *node)
 {
-    heap_t *largest = node;
-    heap_t *left = node->left;
-    heap_t *right = node->right;
+	heap_t *largest = node;
+	heap_t *left = node->left;
+	heap_t *right = node->right;
 
-    if (left && left->n > largest->n)
-        largest = left;
-    if (right && right->n > largest->n)
-        largest = right;
+	if (left && left->n > largest->n)
+		largest = left;
+	if (right && right->n > largest->n)
+		largest = right;
 
-    if (largest != node)
-    {
-        int temp = node->n;
-        node->n = largest->n;
-        largest->n = temp;
-        heapify_down(largest);
-    }
+	if (largest != node)
+	{
+		int temp = node->n;
+
+		node->n = largest->n;
+		largest->n = temp;
+		heapify_down(largest);
+	}
 }
 
 /**
@@ -33,38 +34,38 @@ void heapify_down(heap_t *node)
  */
 heap_t *get_last_node(heap_t *root)
 {
-    if (!root)
-        return (NULL);
+	if (!root)
+		return (NULL);
 
-    heap_t **queue;
-    size_t front = 0, back = 0, size = 1024;
+	heap_t **queue;
+	size_t front = 0, back = 0, size = 1024;
 
-    queue = malloc(sizeof(heap_t *) * size);
-    if (!queue)
-        return (NULL);
+	queue = malloc(sizeof(heap_t *) * size);
+	if (!queue)
+		return (NULL);
 
-    queue[back++] = root;
-    heap_t *last_node = NULL;
+	queue[back++] = root;
+	heap_t *last_node = NULL;
 
-    while (front < back)
-    {
-        last_node = queue[front++];
-        if (last_node->left)
-            queue[back++] = last_node->left;
-        if (last_node->right)
-            queue[back++] = last_node->right;
+	while (front < back)
+	{
+		last_node = queue[front++];
+		if (last_node->left)
+			queue[back++] = last_node->left;
+		if (last_node->right)
+			queue[back++] = last_node->right;
 
-        if (back >= size)
-        {
-            size *= 2;
-            queue = realloc(queue, sizeof(heap_t *) * size);
-            if (!queue)
-                return (NULL);
-        }
-    }
+		if (back >= size)
+		{
+			size *= 2;
+			queue = realloc(queue, sizeof(heap_t *) * size);
+			if (!queue)
+				return (NULL);
+		}
+	}
 
-    free(queue);
-    return (last_node);
+	free(queue);
+	return (last_node);
 }
 
 /**
@@ -75,27 +76,27 @@ heap_t *get_last_node(heap_t *root)
  */
 int heap_extract(heap_t **root)
 {
-    if (!root || !*root)
-        return (0);
+	if (!root || !*root)
+		return (0);
 
-    int value = (*root)->n;
-    heap_t *last_node = get_last_node(*root);
+	int value = (*root)->n;
+	heap_t *last_node = get_last_node(*root);
 
-    if (last_node == *root)
-    {
-        free(*root);
-        *root = NULL;
-        return (value);
-    }
+	if (last_node == *root)
+	{
+		free(*root);
+		*root = NULL;
+		return (value);
+	}
 
-    (*root)->n = last_node->n;
-    if (last_node->parent->left == last_node)
-        last_node->parent->left = NULL;
-    else
-        last_node->parent->right = NULL;
+	(*root)->n = last_node->n;
+	if (last_node->parent->left == last_node)
+		last_node->parent->left = NULL;
+	else
+		last_node->parent->right = NULL;
 
-    free(last_node);
-    heapify_down(*root);
+	free(last_node);
+	heapify_down(*root);
 
-    return (value);
+	return (value);
 }
