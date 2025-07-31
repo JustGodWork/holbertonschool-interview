@@ -6,6 +6,26 @@ primes and removing them and their multiples.
 
 
 def isWinner(x, nums):
+    """
+    Determines the winner of the Prime Game
+    played between Maria and Ben.
+
+    In each round, players take turns picking
+    a prime number from a set of numbers 1 to n,
+    removing that prime and all its multiples
+    from the set. The player who cannot make a move loses.
+    The function simulates x rounds,
+    each with a different n from the nums list.
+
+    Args:
+        x (int): The number of rounds to play.
+        nums (list of int): List of n values for each round.
+
+    Returns:
+        str or None: The name of the player
+                with the most wins ("Maria" or "Ben").
+                    Returns None if there is a tie or if input is invalid.
+    """
     if not nums or x < 1:
         return None
     n = max(nums)
