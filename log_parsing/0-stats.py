@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
 Reads stdin line by line and computes metrics for log parsing.
 """
@@ -19,25 +20,26 @@ def print_stats():
             print("{}: {:d}".format(code, code_counts[code]))
 
 
-try:
-    for line in sys.stdin:
-        line_count += 1
-        parts = line.rstrip().split()
-        if len(parts) >= 7:
-            code = parts[-2]
-            size = parts[-1]
-            if code in status_codes:
+if (__name__ == "__main__"):
+    try:
+        for line in sys.stdin:
+            line_count += 1
+            parts = line.rstrip().split()
+            if len(parts) >= 7:
+                code = parts[-2]
+                size = parts[-1]
+                if code in status_codes:
+                    try:
+                        code_counts[code] += 1
+                    except Exception:
+                        pass
                 try:
-                    code_counts[code] += 1
+                    total_size += int(size)
                 except Exception:
                     pass
-            try:
-                total_size += int(size)
-            except Exception:
-                pass
-        if line_count % 10 == 0:
-            print_stats()
-except KeyboardInterrupt:
+            if line_count % 10 == 0:
+                print_stats()
+    except KeyboardInterrupt:
+        print_stats()
+        raise
     print_stats()
-    raise
-print_stats()
