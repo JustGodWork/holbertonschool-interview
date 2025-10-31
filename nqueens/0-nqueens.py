@@ -19,14 +19,14 @@ def is_safe(board, row, col):
     return True
 
 
-def solve_nqueens(N, board=[], row=0):
-    """
-    Backtracking solution for N Queens.
-    """
+def solve_nqueens(N, board=None, row=0):
+    """Backtracking solution for N Queens."""
+
+    if board is None:
+        board = []
 
     if row == N:
-        print(board)
-
+        print([[r, c] for r, c in board])
         return
 
     for col in range(N):
